@@ -1,19 +1,66 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    image         String?
+model song_requests {
+  id               Int       @id @default(autoincrement())
+  song_name        String?   @db.VarChar(255)
+  song_url         String?   @db.VarChar(255)
+  song_status      String?   @db.VarChar(255)
+  times_requested  Int?
+  request_interval Int?
+  user_id          Int
+  date_created     DateTime? @db.Timestamp(6)
+  date_modified    DateTime? @db.Timestamp(6)
+  user_info        user_info @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model sound_effects {
+  id           Int       @id @default(autoincrement())
+  sound_name   String?   @db.VarChar(255)
+  sound_url    String?   @db.VarChar(255)
+  sound_type   String?   @db.VarChar(255)
+  sound_status String?   @db.VarChar(255)
+  start_time   Int?
+  end_time     Int?
+  user_id      Int
+  date         DateTime? @db.Timestamp(6)
+  user_info    user_info @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_commands {
+  id           Int       @id @default(autoincrement())
+  command_name String?   @db.VarChar(255)
+  message      String?   @db.VarChar(255)
+  aliases      String?   @db.VarChar(255)
+  user_level   Int?
+  user_id      Int
+  date_created DateTime? @db.Timestamp(6)
+  user_info    user_info @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_info {
+  id            Int             @id @default(autoincrement())
+  user_id       String?         @db.VarChar(255)
+  username      String?         @db.VarChar(255)
+  date_created  DateTime?       @db.Timestamp(6)
+  stamina       Int?
+  points        Int?
+  song_requests song_requests[]
+  sound_effects sound_effects[]
+  user_commands user_commands[]
+  user_messages user_messages[]
+}
+
+model user_messages {
+  id           Int       @id @default(autoincrement())
+  message      String?
+  user_id      Int
+  date_created DateTime? @db.Timestamp(6)
+  user_info    user_info @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

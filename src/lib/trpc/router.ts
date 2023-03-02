@@ -1,18 +1,17 @@
-import type { Context } from '$lib/trpc/context';
-import { initTRPC } from '@trpc/server';
-// import delay from 'delay';
+import { publicProcedure, createTRPCRouter } from '$lib/trpc/util';
+import { z } from 'zod';
 
-export const t = initTRPC.context<Context>().create();
-
-export const router = t.router({
-  greeting: t.procedure.query(async () => {
-    // await delay(500); // 👈 simulate an expensive operation
-    return `Hello tRPC v10 @ ${new Date().toLocaleTimeString()}`;
+export const router = createTRPCRouter({
+  getUsers: publicProcedure.query(async ({ ctx }) => {
+    const allUsers = await ctx.prisma.user_info.findMany();
+    return allUsers;
   }),
-  getUser: t.procedure.query(async ({ctx}) => {
-    const onlyUser = await ctx.prisma.user.findFirst();
-    return onlyUser?.email;
-  })
+  getSounds: publicProcedure
+    .input(z.enum(["theme", "sound"]))
+    .query(async ({ input, ctx }) => {
+      const sounds = await ctx.prisma.sound_effects.findMany({ where: { sound_type: input } })
+      return sounds;
+    })
 });
 
 export type Router = typeof router;
