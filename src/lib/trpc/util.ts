@@ -1,6 +1,10 @@
 import type { Context } from '$lib/trpc/context';
 import { initTRPC } from '@trpc/server';
-const t = initTRPC.context<Context>().create();
+import {transformer} from '$src/lib/trpc/transformer';
 
-export const publicProcedure = t.procedure;
+const t = initTRPC.context<Context>().create({
+    transformer,
+});
+
 export const createTRPCRouter = t.router;
+export const publicProcedure = t.procedure;
