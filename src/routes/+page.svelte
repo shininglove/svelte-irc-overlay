@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { trpc } from '$lib/trpc/client';
-	const info = trpc.audioRequest.query('dog');
+	import { onMount } from 'svelte';
+	import { ircConnect } from './(home)/irc';
+	import IrcMessage from './(home)/IRCMessage.svelte';
+	import { messageQueue, name, sentMessage } from './(home)/message';
+	onMount(() => {
+		ircConnect();
+	})
 </script>
 
-
-{#if $info.isSuccess }
-	<span>{$info.data.test}</span>
+{#if $name && $sentMessage}
+	<p>Hello </p>
+	<IrcMessage />
 {/if}
-
-<!-- {#if $info.isError}
-	Error: {$info.error.message}
-{/if} -->

@@ -21,14 +21,16 @@ export const router = createTRPCRouter({
 		});
 		return messages;
 	}),
-	audioRequest: publicProcedure.input(z.string()).query(async ({ input }) => {
-		const data = await fetchWithZod(
-			z.object({ test: z.number() }),
-			`http://localhost:8000/test/${input}`
-		);
-		console.log(data);
-		return data;
-	})
+	audioRequest: publicProcedure
+		.input(z.object({ username: z.string(), message: z.string() }).optional())
+		.query(async ({ input }) => {
+			const data = await fetchWithZod(
+				z.object({ username: z.string(), message: z.string() }),
+				`http://localhost:8000/test/${input?.message}`
+			);
+			console.log(data);
+			return data;
+		})
 });
 
 export type Router = typeof router;

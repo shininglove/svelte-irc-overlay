@@ -1,4 +1,4 @@
-import { messageQueue } from '$src/routes/message';
+import { messageQueue } from '$src/routes/(home)/message';
 import { Client } from 'tmi.js';
 
 export const ircConnect = () => {
@@ -12,9 +12,11 @@ export const ircConnect = () => {
 
 	client.on('message', (_, tags, message, self) => {
 		if (self) return;
+		const displayName = tags['display-name'];
+		const username = tags.username || '';
 		if (message.startsWith('!')) {
-			console.log(`Hello from the side: ${tags['display-name']}`);
-            const data = { username: tags.username || '', message }
+			console.log(`Hello from the side: ${displayName}`);
+            const data = { username , message }
 			messageQueue.update(x => [...x, data]);
 		}
 	});

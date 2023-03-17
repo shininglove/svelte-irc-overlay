@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { trpc } from '$lib/trpc/client';
-	const message = trpc.getMessages.query();
+	const message = trpc.getMessages.query(10);
 </script>
 
 <p class="mt-10">
@@ -13,4 +13,3 @@
 		{/each}
 	{/if}
 </p>
-

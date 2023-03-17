@@ -1,6 +1,6 @@
 import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 import type { inferAsyncReturnType } from '@trpc/server';
-import { prisma } from '$lib/db';
+import { prisma } from '$lib/db/db';
 
 // we're not using the event parameter is this example,
 // hence the eslint-disable rule

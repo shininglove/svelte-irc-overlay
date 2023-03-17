@@ -16,9 +16,11 @@
 		"@tanstack/svelte-query": "^4.24.4",
 		"@trpc/client": "^10.9.1",
 		"@trpc/server": "^10.9.1",
+		"@types/tmi.js": "^1.8.3",
 		"devalue": "^4.2.3",
 		"dotenv": "^16.0.3",
 		"svelte": "^3.55.1",
+		"tmi.js": "^1.8.5",
 		"trpc-svelte-query": "^0.0.2",
 		"zod": "^3.20.2",
 		"zod-fetch": "^0.1.0"

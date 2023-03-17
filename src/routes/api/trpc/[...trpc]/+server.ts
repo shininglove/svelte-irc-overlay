@@ -1,4 +1,4 @@
-import { router } from '$lib/trpc/router';
+import { router } from '$lib/api/router';
 import { createContext } from '$lib/trpc/context';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import type { RequestHandler } from './$types';
