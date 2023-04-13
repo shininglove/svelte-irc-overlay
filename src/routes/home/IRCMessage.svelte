@@ -5,11 +5,11 @@
 	console.log($messageQueue);
 	const data = trpc.audioRequest.query(message);
 	$: setTimeout(() => {
-			console.log(`Cleared queue boi: ${$sentMessage}`);
-			messageQueue.update((item) => {
-				item.shift();
-				return item;
-			});
+		console.log(`Cleared queue boi: ${$sentMessage}`);
+		messageQueue.update((item) => {
+			item.shift();
+			return item;
+		});
 	}, 2000);
 </script>
 
