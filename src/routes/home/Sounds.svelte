@@ -3,7 +3,7 @@
 	const sounds = trpc.getSounds.query('sound');
 </script>
 
-<p>
+<p class="fixed bottom-0">
 	{#if $sounds.isLoading}
 		Loading...
 	{:else if $sounds.isError}
@@ -12,8 +12,7 @@
 		Fetching new sounds
 	{:else}
 		{#each $sounds.data as sound}
-			<span> {sound?.sound_name}[{sound?.sound_type}] </span>
+			<span> <strong class="text-red-500">{sound?.sound_name}</strong>[{sound?.sound_type}] </span>
 		{/each}
 	{/if}
 </p>
-
